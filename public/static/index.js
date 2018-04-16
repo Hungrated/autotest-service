@@ -48,20 +48,26 @@ function handleUpload () {
 
 function handleTest () {
   $('.J_cmd').html('');
-  const filename = $('.J_url').html().split('files/')[1];
+  $('.J_report').html('');
+  $('.J_report').attr('href', '');
+  const filename = $('.J_url').html().split('scripts/')[1];
   if(!filename) {
     return;
   }
   $('#start').removeClass('btn-a');
   $('#start').attr('disabled', 'disabled');
+  $('#start').html('执行中');
   request({
     url: `/api/exec?filename=${filename}`
   }, function (res) {
     if (res.code === 0) {
       htmlLog(res.data.msg)
+      $('.J_report').html(res.data.url);
+      $('.J_report').attr('href', res.data.url);
     }
     $('#start').addClass('btn-a');
     $('#start').removeAttr('disabled');
+    $('#start').html('执 行');
   }, function (err) {
     console.log(err);
   });

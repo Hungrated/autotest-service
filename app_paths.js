@@ -3,6 +3,8 @@ const fs = require('fs');
 
 const host = '127.0.0.1:9090';
 
+const root = __dirname;
+
 const files = path.join(__dirname, 'public', 'files');
 
 const scripts = path.join(files, 'scripts');
@@ -35,6 +37,7 @@ mkdirIfNotExist(reports);
 
 module.exports = {
   host,
+  root,
   files,
   scripts,
   reports

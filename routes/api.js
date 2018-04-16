@@ -29,12 +29,12 @@ router.post('/import', objMulter.any(), function (req, res, next) {
 router.get('/exec', function (req, res, next) {
   const filename = urlLib.parse(req.url, true).query.filename;
   const reportPath = `http://${pathLib.host}/files/reports` +
-    `/${filename.slice(-3)}`;
-  const filePath = path.join(pathLib.files, filename);
+    `/${filename.slice(0, filename.length - 3)}.html`;
+  const filePath = path.join(pathLib.scripts, filename);
 
   fs.access(filePath, function (err) {
     if (err) {
-      res.json({
+      return res.json({
         code: 1,
         data: {
           msg: '无此文件，请重新上传'
@@ -51,7 +51,16 @@ router.get('/exec', function (req, res, next) {
         child.stdout.on('end', function () { cb_end(self); });
       }
 
-      let instance = new Run('macaca', ['run', '-p', '3456', '-d', filePath],
+      let instance = new Run('macaca',
+        [
+          'run',
+          '-p',
+          '3456',
+          '-d',
+          filePath,
+          '--reporter',
+          'macaca-reporter'
+        ],
         function (self, data) {
           let temp = data.toString();
           self.stdout += temp;
@@ -60,11 +69,27 @@ router.get('/exec', function (req, res, next) {
         },
         function (self) {
           self.exit = 1;
-          return res.json({
-            code: 0,
-            data: {
-              msg: '测试完成',
-              url: reportPath
+          let report = `${pathLib.root}/reports/index.html`;
+          let newReport = `${pathLib.reports}` +
+            `/${filename.slice(0, filename.length - 3)}.html`;
+          console.log(pathLib.reports, newReport);
+          fs.access(report, function (err) {
+            if (err) {
+              return res.json({
+                code: 1,
+                data: {
+                  msg: '生成报告错误'
+                }
+              });
+            } else {
+              fs.renameSync(report, newReport);
+              return res.json({
+                code: 0,
+                data: {
+                  msg: '测试完成',
+                  url: reportPath
+                }
+              });
             }
           });
         }
