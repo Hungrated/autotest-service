@@ -15,6 +15,7 @@ body {
     height: 100%;
     min-height: 100vh;
     color: #333333;
+    min-width: 900px;
 }
 
 .g-header, .g-footer {
@@ -69,7 +70,40 @@ body {
     color: #eeeeee;
 }
 
-.g-main .block-hlimit p {
+.g-main .m-cmd {
+    position: relative;
+}
+
+.g-main .m-cmd .url {
+    font-size: 14px;
+}
+
+.g-main .m-cmd .buttons {
+    position: absolute;
+    top: 6px;
+    right: 15px;
+}
+
+.g-main .m-cmd .buttons .btn {
+    padding: 3px 16px;
+    border-radius: 3px;
+    background: #cccccc;
+    color: #555555;
+}
+
+.g-main .m-cmd .buttons .btn-a {
+    background: #eeeeee;
+    color: #232323;
+    cursor: pointer;
+    transition: all 200ms;
+}
+
+.g-main .m-cmd .buttons .btn-a:hover {
+    background: #333333;
+    color: #eeeeee;
+}
+
+.g-main .m-cmd .block-hlimit p {
     word-wrap: break-word;
     margin-bottom: 5px;
     font-family: Menlo;

@@ -5,6 +5,10 @@ const host = '127.0.0.1:9090';
 
 const files = path.join(__dirname, 'public', 'files');
 
+const scripts = path.join(files, 'scripts');
+
+const reports = path.join(files, 'reports');
+
 const makeDir = function (dir) {
   fs.mkdir(dir, function (err) {
     if (err) {
@@ -26,8 +30,12 @@ const mkdirIfNotExist = function (dir) {
 };
 
 mkdirIfNotExist(files);
+mkdirIfNotExist(scripts);
+mkdirIfNotExist(reports);
 
 module.exports = {
   host,
-  files
+  files,
+  scripts,
+  reports
 };

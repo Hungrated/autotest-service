@@ -1,3 +1,11 @@
+const socket = io.connect();
+socket.on('connection', function (msg) {
+  console.log(msg);
+});
+socket.on('log', function (msg) {
+  htmlLog(msg);
+});
+
 function request (opts, sucCb, errCb) {
   const defaultOpts = {
     method: 'GET',
@@ -28,29 +36,37 @@ function handleUpload () {
     cache: false,
     processData: false,
     contentType: false
-  }, function (data) {
-    console.log(data);
+  }, function (res) {
+    if(res.code === 0) {
+      $('.J_url').html(res.data.url);
+      $('.J_url').attr('href', res.data.url);
+    }
   }, function (err) {
     console.log(err);
   });
 }
 
 function handleTest () {
-  const socket = io.connect();
-  socket.on('connection', function (msg) {
-    console.log(msg);
-  });
-  socket.on('log', function (msg) {
-    htmlLog(msg);
-  });
+  $('.J_cmd').html('');
+  const filename = $('.J_url').html().split('files/')[1];
+  if(!filename) {
+    return;
+  }
+  $('#start').removeClass('btn-a');
+  $('#start').attr('disabled', 'disabled');
   request({
-    url: `/api/exec?filename=test.4423dd.1523867088362.js`
-  }, function (data) {
-    console.log(data);
-    socket.emit('disconnect');
+    url: `/api/exec?filename=${filename}`
+  }, function (res) {
+    if (res.code === 0) {
+      htmlLog(res.data.msg)
+    }
+    $('#start').addClass('btn-a');
+    $('#start').removeAttr('disabled');
   }, function (err) {
     console.log(err);
   });
 }
 
-handleTest();
+$('#start').click(function () {
+  handleTest();
+})
