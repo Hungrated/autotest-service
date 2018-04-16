@@ -1,6 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 
+const host = '127.0.0.1:9090';
+
 const files = path.join(__dirname, 'public', 'files');
 
 const makeDir = function (dir) {
@@ -26,5 +28,6 @@ const mkdirIfNotExist = function (dir) {
 mkdirIfNotExist(files);
 
 module.exports = {
+  host,
   files
 };

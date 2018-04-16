@@ -11,13 +11,16 @@ const objMulter = multer({
 
 router.post('/import', objMulter.any(), function (req, res, next) {
   const file = req.files[0];
-  const newName = `${file.destination}/test.${uid.generate()}.${Date.now()}.js`;
-  fs.renameSync(file.path, newName);
+  const filename = `test.${uid.generate()}.${Date.now()}.js`;
+  const newPath = `${file.destination}/${filename}`;
+  const url = `http://${pathLib.host}/files/${filename}`;
+  fs.renameSync(file.path, newPath);
   console.log(file);
   res.json({
     code: 0,
     data: {
-      msg: 'success'
+      msg: '上传成功',
+      url: url
     }
   });
 });
