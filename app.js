@@ -8,6 +8,8 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -21,6 +23,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'html');
 
 app.use('/', indexRouter);
+app.use(function(req, res, next){
+  res.io = io;
+  next();
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -36,7 +42,7 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   console.error(err.message);
-  res.send('Not found.');
+  res.send('Internal server error.');
 });
 
 console.log('http://127.0.0.1:9090/');
