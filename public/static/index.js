@@ -13,6 +13,10 @@ function request (opts, sucCb, errCb) {
   $.ajax(newOpts);
 }
 
+function htmlLog (msg) {
+  $('.J_cmd').append(`<p>${msg}</p>`)
+}
+
 function handleUpload () {
   const file = $('#upload')[0].files[0];
   let formData = new FormData();
@@ -30,3 +34,23 @@ function handleUpload () {
     console.log(err);
   });
 }
+
+function handleTest () {
+  const socket = io.connect();
+  socket.on('connection', function (msg) {
+    console.log(msg);
+  });
+  socket.on('log', function (msg) {
+    htmlLog(msg);
+  });
+  request({
+    url: `/api/exec?filename=test.4423dd.1523867088362.js`
+  }, function (data) {
+    console.log(data);
+    socket.emit('disconnect');
+  }, function (err) {
+    console.log(err);
+  });
+}
+
+handleTest();

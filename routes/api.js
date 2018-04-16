@@ -53,17 +53,8 @@ router.get('/exec', function (req, res, next) {
       let instance = new Run('macaca', ['run', '-p', '3456', '-d', filePath],
         function (self, data) {
           self.stdout += data.toString();
-          console.log(data.toString());
-
-          res.io.on('connection', function (socket) {
-            socket.emit('news', {
-              hello: 'world'
-            });
-            socket.on('my other event', function (data) {
-              console.log(data);
-            });
-          });
-
+          // console.log(data.toString());
+          res.io.emit('log', data.toString());
         },
         function (self) {
           self.exit = 1;

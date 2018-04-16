@@ -63,8 +63,16 @@ body {
 
 .g-main .block-hlimit {
     min-height: 200px;
-    overflow-y: auto;
-    max-height: 500px;
+    font-size: 12px;
+    overflow: auto;
+    max-height: 800px;
+    color: #eeeeee;
+}
+
+.g-main .block-hlimit p {
+    word-wrap: break-word;
+    margin-bottom: 5px;
+    font-family: Menlo;
 }
 
 .g-header p, .g-footer p {
