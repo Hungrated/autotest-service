@@ -5,3 +5,15 @@ public/files
 /autotest-service.iml
 logs/
 reports/
+/install.sh
+/uirecorder.log
+/config.json
+/.editorconfig
+/run.sh
+/run.bat
+/hosts
+/screenshots/
+/uploadfiles/
+/diffbase/
+/commons/
+/.vscode/
