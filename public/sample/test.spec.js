@@ -26,7 +26,7 @@ module.exports = function(){
     });
 
     it('waitBody: ', async function(){
-        await driver.sleep(500).wait('body', 30000).html().then(function(code){
+        await driver.sleep(500).wait('body', 3000).html().then(function(code){
             isPageError(code).should.be.false;
         });
     });

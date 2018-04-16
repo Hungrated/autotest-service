@@ -46,11 +46,9 @@ router.get('/exec', function (req, res, next) {
         const child = spawn(cmd, args);
         const self = this;
         self.exit = 0;
-        self.stdout = '';
-        child.stdout.on('data', function (data) { cb_stdout(self, data); });
+        child.stdout.on('data', function (data) { cb_stdout(data); });
         child.stdout.on('end', function () { cb_end(self); });
       }
-
       let instance = new Run('macaca',
         [
           'run',
@@ -61,9 +59,8 @@ router.get('/exec', function (req, res, next) {
           '--reporter',
           'macaca-reporter'
         ],
-        function (self, data) {
+        function (data) {
           let temp = data.toString();
-          self.stdout += temp;
           console.log(temp);
           res.io.emit('log', temp);
         },
@@ -94,9 +91,6 @@ router.get('/exec', function (req, res, next) {
           });
         }
       );
-      setTimeout(function () {
-        console.log(instance.stdout);
-      }, 250);
     }
   });
 });
