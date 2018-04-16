@@ -22,7 +22,13 @@ function request (opts, sucCb, errCb) {
 }
 
 function htmlLog (msg) {
-  $('.J_cmd').append(`<p>${msg}</p>`)
+  let newMsg = msg.replace(/\[39m/, '</p>')
+  .replace(/\[36m/, '<p class="f-blue">')
+  .replace(/\[36m/g, '')
+  .replace(/\[32m/g, '').replace(/\[31m/g, '')
+  .replace(/\[90m/g, '').replace(/\[92m/g, '').replace(/\[0m/g, '')
+
+  $('.J_cmd').append(newMsg)
 }
 
 function handleUpload () {
