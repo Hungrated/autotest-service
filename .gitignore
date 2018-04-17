@@ -19,3 +19,5 @@ reports/
 /.vscode/
 /sample/
 /logs/
+/macaca-logs/
+/mochawesome-report/

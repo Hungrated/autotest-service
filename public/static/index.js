@@ -22,13 +22,8 @@ function request (opts, sucCb, errCb) {
 }
 
 function htmlLog (msg) {
-  let newMsg = msg.replace(/\[39m/, '</p>')
-  .replace(/\[36m/, '<p class="f-blue">')
-  .replace(/\[36m/g, '')
-  .replace(/\[32m/g, '').replace(/\[31m/g, '')
-  .replace(/\[90m/g, '').replace(/\[92m/g, '').replace(/\[0m/g, '')
-
-  $('.J_cmd').append(newMsg)
+  let newMsg = msg.replace(/\[[0-9]*m/g, '');
+  $('.J_cmd').append(`<p class="f-blue">${newMsg}</p>`)
 }
 
 function handleUpload () {
@@ -67,13 +62,14 @@ function handleTest () {
     url: `/api/exec?filename=${filename}`
   }, function (res) {
     if (res.code === 0) {
-      htmlLog(res.data.msg)
+      htmlLog('<br>');
+      htmlLog(res.data.msg);
       $('.J_report').html(res.data.url);
       $('.J_report').attr('href', res.data.url);
     }
     $('#start').addClass('btn-a');
     $('#start').removeAttr('disabled');
-    $('#start').html('执 行');
+    $('#start').html('重 试');
   }, function (err) {
     console.log(err);
   });
@@ -81,4 +77,4 @@ function handleTest () {
 
 $('#start').click(function () {
   handleTest();
-})
+});

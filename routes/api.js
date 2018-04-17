@@ -11,9 +11,17 @@ const objMulter = multer({
   dest: pathLib.scripts
 });
 
-router.post('/import', objMulter.any(), function (req, res, next) {
+router.post('/import', objMulter.any(), function (req, res) {
   const file = req.files[0];
-  const filename = `test.${uid.generate()}.${Date.now()}.js`;
+  if (!file) {
+      return res.json({
+          code: 1,
+          data: {
+              msg: '上传失败或取消上传'
+          }
+      });
+  }
+  const filename = `test_${uid.generate()}_${Date.now()}.js`;
   const newPath = `${file.destination}/${filename}`;
   const url = `http://${pathLib.host}/files/scripts/${filename}`;
   fs.renameSync(file.path, newPath);
@@ -26,11 +34,16 @@ router.post('/import', objMulter.any(), function (req, res, next) {
   });
 });
 
-router.get('/exec', function (req, res, next) {
+router.get('/exec', function (req, res) {
   const filename = urlLib.parse(req.url, true).query.filename;
+  const rawFilename = filename.slice(0, filename.length - 3);
   const reportPath = `http://${pathLib.host}/files/reports` +
-    `/${filename.slice(0, filename.length - 3)}.html`;
+    `/${rawFilename}.html`;
   const filePath = path.join(pathLib.scripts, filename);
+  const putFile = function(oldPath, newPath, type) {
+      //TODO: accessSync
+      fs.renameSync(`${oldPath}.${type}`, `${newPath}.${type}`);
+  };
 
   fs.access(filePath, function (err) {
     if (err) {
@@ -41,14 +54,16 @@ router.get('/exec', function (req, res, next) {
         }
       });
     } else {
-      function Run (cmd, args, cb_stdout, cb_end) {
+      function Run (cmd, args, options, cb_stdout, cb_end) {
         const spawn = require('child_process').spawn;
-        const child = spawn(cmd, args);
+        const child = spawn(cmd, args, options);
         const self = this;
         self.exit = 0;
         child.stdout.on('data', function (data) { cb_stdout(data); });
         child.stdout.on('end', function () { cb_end(self); });
       }
+      let env = Object.create(process.env);
+      env.MOCHAWESOME_REPORTFILENAME = rawFilename;
       let instance = new Run('macaca',
         [
           'run',
@@ -56,9 +71,12 @@ router.get('/exec', function (req, res, next) {
           '3456',
           '-d',
           filePath,
-          '--reporter',
-          'macaca-reporter'
+          '-r',
+          'mochawesome'
         ],
+        {
+          env: env
+        },
         function (data) {
           let temp = data.toString();
           console.log(temp);
@@ -66,11 +84,12 @@ router.get('/exec', function (req, res, next) {
         },
         function (self) {
           self.exit = 1;
-          let report = `${pathLib.root}/reports/index.html`;
-          let newReport = `${pathLib.reports}` +
-            `/${filename.slice(0, filename.length - 3)}.html`;
-          console.log(pathLib.reports, newReport);
-          fs.access(report, function (err) {
+          let oldPath1 = `${pathLib.root}/mochawesome-report/${rawFilename}`;
+          let oldPath2 = `${pathLib.root}/screenshots/public/files/scripts/${rawFilename}`;
+          let newPath1 = `${pathLib.reports}` + `/${rawFilename}`;
+          let newPath2 = `${pathLib.reports}` + `/${rawFilename}/${rawFilename}`;
+          fs.mkdirSync(newPath1); // TODO: accessSync
+          fs.access(newPath1, function (err) {
             if (err) {
               return res.json({
                 code: 1,
@@ -79,7 +98,8 @@ router.get('/exec', function (req, res, next) {
                 }
               });
             } else {
-              fs.renameSync(report, newReport);
+              putFile(oldPath1, newPath2, 'json');
+              // TODO: images
               return res.json({
                 code: 0,
                 data: {
