@@ -49,8 +49,8 @@ function handleUpload() {
 
 function handleTest() {
     $('.J_cmd').html('');
-    $('.J_report').html('');
-    $('.J_report').attr('href', '');
+    // $('.J_report_title').html('');
+    $('.J_report_list').html('');
     const filename = $('.J_url').html().split('scripts/')[1];
     if (!filename) {
         return;
@@ -64,8 +64,7 @@ function handleTest() {
         if (res.code === 0) {
             htmlLog('<br>');
             htmlLog(res.data.msg);
-            $('.J_report').html(res.data.url);
-            $('.J_report').attr('href', res.data.url);
+            handleReport(res.data)
         }
         $('#start').addClass('btn-a');
         $('#start').removeAttr('disabled');
@@ -73,6 +72,39 @@ function handleTest() {
     }, function (err) {
         console.log(err);
     });
+}
+
+function handleReport(data) {
+    request({
+        url: `${data.dir}/${data.rawname}.json`
+    }, function (res) {
+        renderReport(data.dir, res.suites.suites[0].tests, data.screenshots);
+    });
+}
+
+function renderReport(dir, tests, screenshots) {
+    console.log(tests, screenshots);
+    tests.map(function (_v, _i) {
+        $('.J_report_list').append(renderTest(_i + 1, dir, _v, screenshots[_i]));
+    });
+}
+
+function renderTest(index, dir, test, screenshot) {
+    return `
+        <div class="u-test">
+            <span class="title">${index}</span>
+            <span class="title">${test.title}</span>
+            ${test.pass ? `<span class="title">passed</span>`
+                : `<span class="title">failed</span>`}
+            <span class="title">${test.duration}&nbsp;ms</span>
+            <div class="code">
+                <code>${test.code}</code>
+            </div>
+            <div class="screenshot">
+                <img src="${dir}/${screenshot}">
+            </div>
+        </div>    
+    `;
 }
 
 $('#start').click(function () {

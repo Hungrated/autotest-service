@@ -28,6 +28,12 @@ body {
     font-size: 14px;
 }
 
+.g-header p, .g-footer p {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
 .g-header {
     top: 0;
     font-size: 18px;
@@ -109,10 +115,53 @@ body {
     font-family: Menlo;
 }
 
-.g-header p, .g-footer p {
+.g-main .m-report .block {
+    padding: 0 20px;
+}
+
+.g-main .m-report .u-test {
     display: block;
-    width: 100%;
-    text-align: center;
+    margin: 16px 0;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    padding: 20px 35px;
+    background: #f9f9f9;
+    transition: all 200ms;
+}
+
+.g-main .m-report .u-test:hover {
+    box-shadow: 0 0 10px #999999;
+}
+
+.g-main .m-report .u-test .title {
+    display: inline-block;
+    background: #44a146;
+    color: #eeeeee;
+    border-radius: 3px;
+    padding: 5px 10px;
+}
+
+.g-main .m-report .u-test .code {
+    margin: 15px 0;
+    padding: 20px 30px;
+    background: #eeeeee;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.g-main .m-report .u-test .screenshot {
+    max-height: 825px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #999999;
+    font-size: 0;
+}
+
+.g-main .m-report .u-test .screenshot img {
+    width: 105%;
 }
 
 .f-blue {
