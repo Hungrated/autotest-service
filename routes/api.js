@@ -101,6 +101,7 @@ router.get('/exec', function (req, res) {
                     function createReportFile() {
                         removeDirContents(newPath);
                         putFile(oldPath1, `${newPath}/${rawFilename}`, 'json');
+                        fs.unlinkSync(`${oldPath1}/${rawFilename}.html`);
                         let files = fs.readdirSync(oldPath2);
                         let screenshots = [];
                         files.forEach(function (file) {
