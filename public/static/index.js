@@ -41,6 +41,7 @@ function handleUpload() {
         if (res.code === 0) {
             $('.J_url').html(res.data.url);
             $('.J_url').attr('href', res.data.url);
+            $('#start').html('执 行');
         }
     }, function (err) {
         console.log(err);
