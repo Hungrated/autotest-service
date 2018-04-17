@@ -104,10 +104,14 @@ router.get('/exec', function (req, res) {
                         let files = fs.readdirSync(oldPath2);
                         let screenshots = [];
                         files.forEach(function (file) {
-                            if (new RegExp(rawFilename).test(file) && /\.png$/.test(file)) {
-                                screenshots.push(file);
-                                let pngName = file.slice(0, file.length - 4);
-                                putFile(`${oldPath2}/${pngName}`, `${newPath}/${pngName}`, 'png');
+                            if (new RegExp(rawFilename).test(file)) {
+                                if(/\.png$/.test(file)) {
+                                    screenshots.push(file);
+                                    let pngName = file.slice(0, file.length - 4);
+                                    putFile(`${oldPath2}/${pngName}`, `${newPath}/${pngName}`, 'png');
+                                } else {
+                                    fs.unlinkSync(`${oldPath2}/${file}`);
+                                }
                             }
                         });
                         return res.json({
