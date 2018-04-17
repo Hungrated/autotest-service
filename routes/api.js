@@ -14,12 +14,12 @@ const objMulter = multer({
 router.post('/import', objMulter.any(), function (req, res) {
   const file = req.files[0];
   if (!file) {
-      return res.json({
-          code: 1,
-          data: {
-              msg: '上传失败或取消上传'
-          }
-      });
+    return res.json({
+      code: 1,
+      data: {
+        msg: '上传失败或取消上传'
+      }
+    });
   }
   const filename = `test_${uid.generate()}_${Date.now()}.js`;
   const newPath = `${file.destination}/${filename}`;
@@ -41,8 +41,13 @@ router.get('/exec', function (req, res) {
     `/${rawFilename}.html`;
   const filePath = path.join(pathLib.scripts, filename);
   const putFile = function(oldPath, newPath, type) {
-      //TODO: accessSync
       fs.renameSync(`${oldPath}.${type}`, `${newPath}.${type}`);
+  };
+  const removeDirContents = function (dir) {
+    let files = fs.readdirSync(dir);
+    files.forEach(function (file) {
+        fs.unlinkSync(`${dir}/${file}`);
+    });
   };
 
   fs.access(filePath, function (err) {
@@ -88,25 +93,33 @@ router.get('/exec', function (req, res) {
           let oldPath2 = `${pathLib.root}/screenshots/public/files/scripts/${rawFilename}`;
           let newPath1 = `${pathLib.reports}` + `/${rawFilename}`;
           let newPath2 = `${pathLib.reports}` + `/${rawFilename}/${rawFilename}`;
-          fs.mkdirSync(newPath1); // TODO: accessSync
+          function createReportFile () {
+            removeDirContents(newPath1);
+            putFile(oldPath1, newPath2, 'json');
+            // TODO: images
+            return res.json({
+              code: 0,
+              data: {
+                msg: '测试完成',
+                url: reportPath
+              }
+            });
+          }
           fs.access(newPath1, function (err) {
             if (err) {
-              return res.json({
-                code: 1,
-                data: {
-                  msg: '生成报告错误'
-                }
-              });
+              if(err.code === 'ENOENT') {
+                fs.mkdirSync(newPath1);
+                createReportFile();
+              } else {
+                return res.json({
+                  code: 1,
+                  data: {
+                    msg: '生成报告错误'
+                  }
+                });
+              }
             } else {
-              putFile(oldPath1, newPath2, 'json');
-              // TODO: images
-              return res.json({
-                code: 0,
-                data: {
-                  msg: '测试完成',
-                  url: reportPath
-                }
-              });
+              createReportFile();
             }
           });
         }
