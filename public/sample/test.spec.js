@@ -26,22 +26,18 @@ module.exports = function(){
     });
 
     it('waitBody: ', async function(){
-        await driver.sleep(500).wait('body', 3000).html().then(function(code){
+        await driver.sleep(500).wait('body', 30000).html().then(function(code){
             isPageError(code).should.be.false;
         });
     });
 
-    it('scrollTo: 0, 1674', async function(){
-        await driver.scrollTo(0, 1674);
+    it('scrollTo: 0, 2257', async function(){
+        await driver.scrollTo(0, 2257);
     });
 
-    it('scrollTo: 0, 2202', async function(){
-        await driver.scrollTo(0, 2202);
-    });
-
-    it('click: 立即抢购 ( #flashItemList section.flashSaleItem-1 > div.rt > a.tobuyBtn, 53, 8, 0 )', async function(){
-        await driver.sleep(300).wait('#flashItemList section.flashSaleItem-1 > div.rt > a.tobuyBtn', 30000)
-               .sleep(300).mouseMove(53, 8).click(0);
+    it('click: #flashSaleContainer div > a.link, 112, 271, 0', async function(){
+        await driver.sleep(300).wait('#flashSaleContainer div > a.link', 30000)
+               .sleep(300).mouseMove(112, 271).click(0);
     });
 
     it('switchWindow: 1', async function(){
@@ -54,71 +50,18 @@ module.exports = function(){
         });
     });
 
-    it('scrollTo: 0, 172', async function(){
-        await driver.scrollTo(0, 172);
+    it('scrollTo: 0, 327', async function(){
+        await driver.scrollTo(0, 327);
     });
 
-    it('click: #j-app div.list > ul > li:nth-child(3) > a > img, 47, 48, 0', async function(){
-        await driver.sleep(300).wait('#j-app div.list > ul > li:nth-child(3) > a > img', 30000)
-               .sleep(300).mouseMove(47, 48).click(0);
+    it('click: 即将开抢 ( #wraper div:nth-child(5) > div.sessionInner > div.sessionStatus, 62, 3, 0 )', async function(){
+        await driver.sleep(300).wait('#wraper div:nth-child(5) > div.sessionInner > div.sessionStatus', 30000)
+               .sleep(300).mouseMove(62, 3).click(0);
     });
 
-    it('click: #j-app div.list > ul > li:nth-child(4) > a > img, 61, 29, 0', async function(){
-        await driver.sleep(300).wait('#j-app div.list > ul > li:nth-child(4) > a > img', 30000)
-               .sleep(300).mouseMove(61, 29).click(0);
-    });
-
-    it('click: #j-app div.list > ul > li:nth-child(5) > a > img, 47, 39, 0', async function(){
-        await driver.sleep(300).wait('#j-app div.list > ul > li:nth-child(5) > a > img', 30000)
-               .sleep(300).mouseMove(47, 39).click(0);
-    });
-
-    it('scrollTo: 0, 522', async function(){
-        await driver.scrollTo(0, 522);
-    });
-
-    it('scrollTo: 0, 872', async function(){
-        await driver.scrollTo(0, 872);
-    });
-
-    it('scrollTo: 0, 1591', async function(){
-        await driver.scrollTo(0, 1591);
-    });
-
-    it('scrollTo: 0, 817', async function(){
-        await driver.scrollTo(0, 817);
-    });
-
-    it('click: 加入购物车 ( //div[text()="加入购物车"], 74, 25, 0 )', async function(){
-        await driver.sleep(300).wait('//div[text()="加入购物车"]', 30000)
-               .sleep(300).mouseMove(74, 25).click(0);
-    });
-
-    it('scrollTo: 0, 27', async function(){
-        await driver.scrollTo(0, 27);
-    });
-
-    it('click: 为你严选 ( //a[text()="为你严选"], 26, 12, 0 )', async function(){
-        await driver.sleep(300).wait('//a[text()="为你严选"]', 30000)
-               .sleep(300).mouseMove(26, 12).click(0);
-    });
-
-    it('switchWindow: 2', async function(){
-        await driver.sleep(500).switchWindow(2);
-    });
-
-    it('waitBody: ', async function(){
-        await driver.sleep(500).wait('body', 30000).html().then(function(code){
-            isPageError(code).should.be.false;
-        });
-    });
-
-    it('scrollTo: 0, 20', async function(){
-        await driver.scrollTo(0, 20);
-    });
-
-    it('scrollTo: 0, 563', async function(){
-        await driver.scrollTo(0, 563);
+    it('click: 18:00 ( #wraper div:nth-child(6) > div.sessionInner > div.sessionTime > span.time, 45, 17, 0 )', async function(){
+        await driver.sleep(300).wait('#wraper div:nth-child(6) > div.sessionInner > div.sessionTime > span.time', 30000)
+               .sleep(300).mouseMove(45, 17).click(0);
     });
 
     function _(str){
