@@ -28,10 +28,11 @@ npm i mocha macaca-cli macaca-wd macaca-reporter macaca-chrome chai
 参考链接：https://macacajs.github.io/zh/environment-setup
 
 * **注意：**  
-1. 全局安装不要用`sudo`命令，推荐使用`nvm`安装node，可将node和npm安装到用户目录下（若安装在系统目录下，会导致测试脚本运行失败！）；
-2. Java环境只支持Java 1.8，不支持Java 9；
-3. 客户端和服务端各工具库的版本建议保持一致；
-4. 可通过命令 `macaca doctor` 来检测安装环境。
+1. **服务端克隆路径请避免空格，否则程序无法运行**；
+2. 全局安装不要用`sudo`命令，推荐使用`nvm`安装node，可将node和npm安装到用户目录下（若安装在系统目录下，会导致测试脚本运行失败！）；
+3. Java环境只支持Java 1.8，不支持Java 9；
+4. 客户端和服务端各工具库的版本建议保持一致；
+5. 可通过命令 `macaca doctor` 来检测安装环境。
 
 * **配置环境样例：**
 
