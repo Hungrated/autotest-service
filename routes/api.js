@@ -5,6 +5,7 @@ const path = require('path');
 const multer = require('multer');
 const uid = require('../middlewares/uid');
 const fs = require('fs');
+const spawn = require('cross-spawn');
 const urlLib = require('url');
 
 const objMulter = multer({
@@ -60,7 +61,6 @@ router.get('/exec', function (req, res) {
             });
         } else {
             function Run(cmd, args, options, cb_stdout, cb_end) {
-                const spawn = require('child_process').spawn;
                 const child = spawn(cmd, args, options);
                 const self = this;
                 self.exit = 0;
@@ -74,8 +74,6 @@ router.get('/exec', function (req, res) {
 
             let env = Object.create(process.env);
             env.MOCHAWESOME_REPORTFILENAME = rawFilename;
-            env.stdio = 'inherit';
-            env.shell = process.platform === 'win32';
             let instance = new Run('macaca',
                 [
                     'run',
