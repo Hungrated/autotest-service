@@ -146,13 +146,11 @@ body {
     padding: 20px 30px;
     background: #eeeeee;
     border-radius: 5px;
-    max-height: 200px;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
 .g-main .m-report .u-test .screenshot {
-    max-height: 825px;
     overflow-x: hidden;
     overflow-y: auto;
     border-radius: 5px;
@@ -161,7 +159,9 @@ body {
 }
 
 .g-main .m-report .u-test .screenshot img {
-    width: 105%;
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 .f-blue {
