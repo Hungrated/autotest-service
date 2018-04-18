@@ -84,7 +84,6 @@ function handleReport(data) {
 }
 
 function renderReport(dir, tests, screenshots) {
-    console.log(tests, screenshots);
     tests.map(function (_v, _i) {
         $('.J_report_list').append(renderTest(_i + 1, dir, _v, screenshots[_i]));
     });
