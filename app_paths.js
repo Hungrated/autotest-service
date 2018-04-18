@@ -1,7 +1,11 @@
 const path = require('path');
 const fs = require('fs');
 
-const host = '127.0.0.1:9090';
+const ip = '127.0.0.1';
+
+const port = '9090';
+
+const host = `${ip}:${port}`;
 
 const root = __dirname;
 

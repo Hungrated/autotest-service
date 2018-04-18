@@ -15,17 +15,9 @@
 
 ### 1 安装环境、工具包和驱动（在服务端和客户端均需完成）
 
-将项目`autotest-service`克隆到服务端，项目`autotest-client`克隆到客户端，并按照官方文档安装好环境后，执行：
+将项目`autotest-service`克隆到服务端，项目`autotest-client`克隆到客户端，并按照官方文档安装好环境。
 
-```bash
-# 全局安装
-npm i macaca-cli uirecorder selenium-standalone -g
-
-# 桌面端chrome浏览器测试
-# 必须安装：macaca-wd Web Driver驱动、chai 断言库（也可选择其他，例如should）
-npm i mocha macaca-cli macaca-wd macaca-reporter macaca-chrome chai
-```
-参考链接：https://macacajs.github.io/zh/environment-setup
+> 克隆之前请先阅读下面的注意事项。
 
 * **注意：**  
 1. **服务端克隆路径请避免空格，否则程序无法运行**；
@@ -34,28 +26,50 @@ npm i mocha macaca-cli macaca-wd macaca-reporter macaca-chrome chai
 4. 客户端和服务端各工具库的版本建议保持一致；
 5. 可通过命令 `macaca doctor` 来检测安装环境。
 
-* **配置环境样例：**
+#### 1.1 全局安装相关工具
+
+```bash
+npm i macaca-cli uirecorder selenium-standalone -g
+```
+
+#### 1.2 修改IP地址
+
+进入`./app_paths.js`，将第4行的IP改为服务器IP
+
+```jacascript
+- const host = '127.0.0.1';
++ const host = currentServerHost;
+```
+
+#### 1.3 安装依赖库
+
+依赖库配置信息如下所示，直接在根目录执行命令`npm i`即可。
 
 ```
 // package.json
-
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "jwebdriver": "^2.2.5",
-    "macaca-android": "^2.0.47",
-    "macaca-chrome": "^1.0.7",
-    "macaca-cli": "^2.1.2",
-    "macaca-ios": "^2.0.30",
-    "macaca-reporter": "^1.1.0",
-    "macaca-wd": "^1.0.37",
-    "mocha": "^5.1.0",
-    "resemblejs-node": "^1.0.0"
-  },
-  "dependencies": {
-    "opn": "^5.2.0",
-    "path": "^0.12.7"
-  }
+{
+    "devDependencies": {
+        "chai": "^4.1.2",
+        "jwebdriver": "^2.2.5",
+        "macaca-android": "^2.0.47",
+        "macaca-chrome": "^1.0.7",
+        "macaca-cli": "^2.1.2",
+        "macaca-ios": "^2.0.30",
+        "macaca-reporter": "^1.1.0",
+        "macaca-wd": "^1.0.37",
+        "mocha": "^5.1.0",
+        "resemblejs-node": "^1.0.0"
+    },
+    "dependencies": {
+        "opn": "^5.2.0",
+        "path": "^0.12.7"
+    }
+}
 ```
+
+* 注意：若为Windows或Linux环境，请取消`macaca-ios`的安装。
+
+参考链接：https://macacajs.github.io/zh/environment-setup
 
 ### 2 利用 `uirecorder` 录制测试操作（仅在客户端完成）
 
