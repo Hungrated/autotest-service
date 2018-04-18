@@ -74,6 +74,8 @@ router.get('/exec', function (req, res) {
 
             let env = Object.create(process.env);
             env.MOCHAWESOME_REPORTFILENAME = rawFilename;
+            env.stdio = 'inherit';
+            env.shell = process.platform === 'win32';
             let instance = new Run('macaca',
                 [
                     'run',
