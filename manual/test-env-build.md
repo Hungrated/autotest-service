@@ -34,7 +34,7 @@ npm i macaca-cli uirecorder selenium-standalone -g
 
 #### 1.2 修改IP地址
 
-进入`./app_paths.js`，将第4行的IP改为服务器IP
+修改`./app_paths.js`，将第4行的IP改为服务器IP
 
 ```jacascript
 - const ip = '127.0.0.1';
