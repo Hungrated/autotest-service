@@ -37,8 +37,8 @@ npm i macaca-cli uirecorder selenium-standalone -g
 进入`./app_paths.js`，将第4行的IP改为服务器IP
 
 ```jacascript
-- const host = '127.0.0.1';
-+ const host = currentServerHost;
+- const ip = '127.0.0.1';
++ const ip = currentServerHost;
 ```
 
 #### 1.3 安装依赖库
