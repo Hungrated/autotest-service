@@ -11,12 +11,12 @@ function request(opts, sucCb, errCb) {
         method: 'GET',
         success: sucCb,
         dataType: 'json',
-        error: errCb,
+        error: errCb
     };
 
     let newOpts = {
         ...defaultOpts,
-        ...opts,
+        ...opts
     };
     $.ajax(newOpts);
 }
@@ -36,7 +36,7 @@ function handleUpload() {
         data: formData,
         cache: false,
         processData: false,
-        contentType: false,
+        contentType: false
     }, function (res) {
         if (res.code === 0) {
             $('.J_url').html(res.data.url);
@@ -60,7 +60,7 @@ function handleTest() {
     $('#start').attr('disabled', 'disabled');
     $('#start').html('执行中');
     request({
-        url: `/api/exec?filename=${filename}`,
+        url: `/api/exec?filename=${filename}`
     }, function (res) {
         if (res.code === 0) {
             htmlLog('<br>');
@@ -95,7 +95,7 @@ function renderTest(index, dir, test, screenshot) {
             <span class="title">${index}</span>
             <span class="title">${test.title}</span>
             ${test.pass ? `<span class="title">passed</span>`
-                : `<span class="title">failed</span>`}
+        : `<span class="title">failed</span>`}
             <span class="title">${test.duration}&nbsp;ms</span>
             <div class="code">
                 <code>${test.code}</code>

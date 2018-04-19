@@ -9,7 +9,7 @@ const spawn = require('cross-spawn');
 const urlLib = require('url');
 
 const objMulter = multer({
-    dest: pathLib.scripts,
+    dest: pathLib.scripts
 });
 
 router.post('/import', objMulter.any(), function (req, res) {
@@ -18,8 +18,8 @@ router.post('/import', objMulter.any(), function (req, res) {
         return res.json({
             code: 1,
             data: {
-                msg: '上传失败或取消上传',
-            },
+                msg: '上传失败或取消上传'
+            }
         });
     }
     const filename = `test_${uid.generate()}_${Date.now()}.js`;
@@ -30,8 +30,8 @@ router.post('/import', objMulter.any(), function (req, res) {
         code: 0,
         data: {
             msg: '上传成功',
-            url: url,
-        },
+            url: url
+        }
     });
 });
 
@@ -56,8 +56,8 @@ router.get('/exec', function (req, res) {
             return res.json({
                 code: 1,
                 data: {
-                    msg: '无此文件，请重新上传',
-                },
+                    msg: '无此文件，请重新上传'
+                }
             });
         } else {
             function Run(cmd, args, options, cb_stdout, cb_end) {
@@ -82,10 +82,10 @@ router.get('/exec', function (req, res) {
                     '-d',
                     filePath,
                     '-r',
-                    'mochawesome',
+                    'mochawesome'
                 ],
                 {
-                    env: env,
+                    env: env
                 },
                 function (data) {
                     let temp = data.toString();
@@ -106,7 +106,7 @@ router.get('/exec', function (req, res) {
                         let screenshots = [];
                         files.forEach(function (file) {
                             if (new RegExp(rawFilename).test(file)) {
-                                if(/\.png$/.test(file)) {
+                                if (/\.png$/.test(file)) {
                                     screenshots.push(file);
                                     let pngName = file.slice(0, file.length - 4);
                                     putFile(`${oldPath2}/${pngName}`, `${newPath}/${pngName}`, 'png');
@@ -122,7 +122,7 @@ router.get('/exec', function (req, res) {
                                 dir: dirUrl,
                                 rawname: rawFilename,
                                 screenshots: screenshots
-                            },
+                            }
                         });
                     }
 
@@ -135,15 +135,15 @@ router.get('/exec', function (req, res) {
                                 return res.json({
                                     code: 1,
                                     data: {
-                                        msg: '生成报告错误',
-                                    },
+                                        msg: '生成报告错误'
+                                    }
                                 });
                             }
                         } else {
                             createReportFile();
                         }
                     });
-                },
+                }
             );
         }
     });
