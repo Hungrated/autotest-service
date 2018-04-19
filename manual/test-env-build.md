@@ -71,11 +71,9 @@ npm i macaca-cli uirecorder selenium-standalone -g
 
 参考链接：https://macacajs.github.io/zh/environment-setup
 
-### 2 利用 `uirecorder` 录制测试操作（仅在客户端完成）
+### 2 利用 `UI Recorder` 录制测试操作（仅在客户端完成）
 
 #### 2.1 环境搭建
-
-UI Recorder（录制回放器） - PC：
 
 ```
 # 安装依赖
@@ -83,7 +81,6 @@ npm i --save-dev jwebdriver resemblejs-node
 
 # 初始化uirecorder
 uirecorder init
-
 ```
 
 参考链接：https://github.com/alibaba/uirecorder
@@ -117,7 +114,7 @@ forever start app.js
 
 #### 3.2 开始测试
 
-* 访问`服务器ip:9090`进入主界面，选择在本地录制好的脚本文件；
+* 访问`服务器IP:9090`进入主界面，选择在本地录制好的脚本文件；
 
 ![](./man_02.png)
 
